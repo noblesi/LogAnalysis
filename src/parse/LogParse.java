@@ -29,6 +29,7 @@ public class LogParse {
 
 	public void excute() throws IOException {
 
+		// 파일 경로로 수정 필요함
 		String[] paths = { "D:/조창완/dev/academy/07.조별과제/sist_input_1.log",
 				"D:/조창완/dev/academy/07.조별과제/sist_input_2.log" };
 
