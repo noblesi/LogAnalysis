@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class LogDTO {
 
-	private int lineNumber;
+	private int lineNumber; // 몇번째 라인인가.
 	private StatusCode responseResult; // 응답 결과
 	private String url; // url 요청 텍스트
 	private String key; // key

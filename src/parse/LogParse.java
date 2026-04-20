@@ -10,8 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 로그에서 필요한 데이터를 추출하여 List 에 담는다.<br>
- * 손상된 데이터는 담지 않는다.
+ * 로그에서 필요한 데이터를 추출하여 LogDTO에 저장하고 List 에 추가한다.<br>
  */
 public class LogParse {
 
@@ -20,14 +19,10 @@ public class LogParse {
 	public static final int BROWSER = 3;
 	public static final int LOG_TIME = 4;
 
-	private List<LogDTO> logList;
-	private int lineNumber = 1;
+	private List<LogDTO> logList = new ArrayList<LogDTO>(); // LogDTO들이 저장되는 DTO
+	private int lineNumber = 1; // 몇번째 라인인지 표기하기 위한 수
 
-	public LogParse() {
-		logList = new ArrayList<LogDTO>();
-	}
-
-	public void excute() throws IOException {
+	public void execute() throws IOException {
 
 		// 파일 경로로 수정 필요함
 		String[] paths = { "D:/조창완/dev/academy/07.조별과제/sist_input_1.log",
@@ -39,6 +34,12 @@ public class LogParse {
 
 	}
 
+	/**
+	 * log 를 가공해서 DTO에 담고 리스트에 저장하는 일
+	 * 
+	 * @param path log 파일 경로
+	 * @throws IOException
+	 */
 	public void parseLog(String path) throws IOException {
 		File logFile = new File(path);
 
@@ -51,6 +52,12 @@ public class LogParse {
 			String log = "";
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
+			StatusCode responseResult = null;
+			String url = "";
+			String key = "";
+			String browser = "";
+			LocalDateTime logTime = null;
+
 			while ((log = br.readLine()) != null) {
 				String[] logParts = log.split("[\\[\\]]+");
 
@@ -61,37 +68,35 @@ public class LogParse {
 				}
 
 				// 응답 코드 얻어오기
-				StatusCode responseResult = parseStatusCode(logParts[RESPONSE_RESULT]);
+				responseResult = parseStatusCode(logParts[RESPONSE_RESULT]);
 
 				// url 얻어오기
-				String url = parseUrl(logParts[URL]);
+				url = parseUrl(logParts[URL]);
 
 				// key 얻어오기
-				String key = parseKey(logParts[URL]);
+				key = parseKey(logParts[URL]);
 
 				// 브라우져 얻어오기
-				String browser = logParts[BROWSER];
+				browser = logParts[BROWSER];
 
 				// 요청 시간 얻어오기
-				LocalDateTime logTime = null;
-				try {
-					String rawTime = logParts[LOG_TIME].substring(0, 19);
-					logTime = LocalDateTime.parse(rawTime, formatter);
+				logTime = parseLogTime(logParts[LOG_TIME], formatter);
 
-					// 성공 시 DTO 생성 및 리스트 추가
-					LogDTO logInfo = new LogDTO(lineNumber++, responseResult, url, key, browser, logTime);
-					logList.add(logInfo);
-					System.out.println(logInfo);
+				// DTO 생성 및 리스트 추가
+				LogDTO logInfo = new LogDTO(lineNumber++, responseResult, url, key, browser, logTime);
+				logList.add(logInfo);
+				System.out.println(logInfo);
 
-				} catch (Exception e) {
-					// 실패시 리스트에 담지 않고 넘어간다.
-					System.err.println("[라인 " + lineNumber + " 에러] 시간 형식 오류: " + logParts[LOG_TIME]);
-					lineNumber++;
-				}
 			}
 		}
 	}
 
+	/**
+	 * 정수 문자열을 보고 응답 코드로 반환하는 일
+	 * 
+	 * @param code 200, 403, 404, 500 등의 코드 문자열
+	 * @return StatusCode
+	 */
 	private StatusCode parseStatusCode(String code) {
 		switch (code) {
 		case "200":
@@ -105,6 +110,13 @@ public class LogParse {
 		}
 	}
 
+	/**
+	 * url 에서 endpoint (./find/ 뒤에 최종 목적지) 를 반환하는 일<br>
+	 * fine/ 뒤에 더 이상 목적지가 없으면 공백을 반환한다.
+	 * 
+	 * @param requestPath 전체 url
+	 * @return url 에서 추출한 endpoint
+	 */
 	private String parseUrl(String requestPath) {
 		if (requestPath.contains("?")) {
 			int start = requestPath.lastIndexOf("/") + 1;
@@ -114,6 +126,12 @@ public class LogParse {
 		return "";
 	}
 
+	/**
+	 * url 에서 key 를 찾아 반환하는 일
+	 * 
+	 * @param requestPath 전체 url
+	 * @return key
+	 */
 	private String parseKey(String requestPath) {
 		if (requestPath.contains("key=")) {
 			int start = requestPath.lastIndexOf("key=") + 4;
@@ -123,6 +141,26 @@ public class LogParse {
 		return "";
 	}
 
+	/**
+	 * log 의 요청 시간을 LocalDateTime 형으로 반환하는 일<br>
+	 * 시간의 초 부분에 ora 가 있으면 00초로 바꿔서 저장한다.
+	 * 
+	 * @param rawTime   시간 정보가 담긴 문자열
+	 * @param formatter 형식
+	 * @return LocalDateTime 형의 요청 시간 정보
+	 */
+	private LocalDateTime parseLogTime(String rawTime, DateTimeFormatter formatter) {
+		if (rawTime.contains("ora")) {
+			rawTime = rawTime.replace("ora", "00");
+		}
+
+		if (rawTime.length() > 19) {
+			rawTime = rawTime.substring(0, 19);
+		}
+
+		return LocalDateTime.parse(rawTime, formatter);
+	}
+
 	public List<LogDTO> getLogList() {
 		return logList;
 	}
@@ -130,7 +168,7 @@ public class LogParse {
 	// 간단한 test 용
 	public static void main(String[] args) {
 		try {
-			new LogParse().excute();
+			new LogParse().execute();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
