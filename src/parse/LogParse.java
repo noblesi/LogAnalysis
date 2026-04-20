@@ -127,6 +127,7 @@ public class LogParse {
 		return logList;
 	}
 
+	// 간단한 test 용
 	public static void main(String[] args) {
 		try {
 			new LogParse().excute();
