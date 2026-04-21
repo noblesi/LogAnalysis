@@ -19,19 +19,16 @@ public class LogParse {
 	public static final int BROWSER = 3;
 	public static final int LOG_TIME = 4;
 
-	private List<LogDTO> logList = new ArrayList<LogDTO>(); // LogDTO들이 저장되는 DTO
+	private List<LogDTO> logList = new ArrayList<LogDTO>(); // LogDTO들이 저장되는 List
 	private int lineNumber = 1; // 몇번째 라인인지 표기하기 위한 수
 
-	public void execute() throws IOException {
-
+	public LogParse() throws IOException {
 		// 파일 경로로 수정 필요함
-		String[] paths = { "D:/조창완/dev/academy/07.조별과제/sist_input_1.log",
-				"D:/조창완/dev/academy/07.조별과제/sist_input_2.log" };
+		String[] paths = { "C:/dev/07.조별과제/sist_input_1.log", "C:/dev/07.조별과제/sist_input_2.log" };
 
 		for (String path : paths) {
 			parseLog(path);
 		}
-
 	}
 
 	/**
@@ -40,7 +37,7 @@ public class LogParse {
 	 * @param path log 파일 경로
 	 * @throws IOException
 	 */
-	public void parseLog(String path) throws IOException {
+	private void parseLog(String path) throws IOException {
 		File logFile = new File(path);
 
 		if (!logFile.exists()) {
@@ -85,8 +82,6 @@ public class LogParse {
 				// DTO 생성 및 리스트 추가
 				LogDTO logInfo = new LogDTO(lineNumber++, responseResult, url, key, browser, logTime);
 				logList.add(logInfo);
-				System.out.println(logInfo);
-
 			}
 		}
 	}
@@ -106,7 +101,7 @@ public class LogParse {
 		case "404":
 			return StatusCode.NOT_FOUND;
 		default:
-			return StatusCode.ISE;
+			return StatusCode.SERVER_ERROR;
 		}
 	}
 
@@ -165,12 +160,4 @@ public class LogParse {
 		return logList;
 	}
 
-	// 간단한 test 용
-	public static void main(String[] args) {
-		try {
-			new LogParse().execute();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 }
