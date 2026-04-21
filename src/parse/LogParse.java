@@ -24,11 +24,8 @@ public class LogParse {
 
 	public LogParse() throws IOException {
 		// 파일 경로로 수정 필요함
-		String[] paths = { "C:/dev/07.조별과제/sist_input_1.log", "C:/dev/07.조별과제/sist_input_2.log" };
-
-		for (String path : paths) {
-			parseLog(path);
-		}
+		String path = "C:/dev/07.조별과제/sist_input_1.log";
+		parseLog(path);
 	}
 
 	/**
@@ -156,6 +153,11 @@ public class LogParse {
 		return LocalDateTime.parse(rawTime, formatter);
 	}
 
+	/**
+	 * 저장된 LogDTO List 를 반환한다.
+	 * 
+	 * @return logList
+	 */
 	public List<LogDTO> getLogList() {
 		return logList;
 	}

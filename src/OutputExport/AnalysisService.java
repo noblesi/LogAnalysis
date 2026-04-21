@@ -11,10 +11,11 @@ import parse.StatusCode;
 
 public class AnalysisService {
 
-	AnalysisResult analysisResult = new AnalysisResult();
+	AnalysisResult analysisResult = null;
 	List<LogDTO> logList = null;
 
 	public AnalysisService() throws IOException {
+		analysisResult = new AnalysisResult();
 		logList = new LogParse().getLogList();
 
 		countKey();
@@ -49,6 +50,45 @@ public class AnalysisService {
 		analysisResult.setTopKeyCount(topKeyCount);
 	}
 
+	// 7. 시작 줄과 끝 줄을 받아 최다 사용키를 구하고 범위 결과에 저장하고 반환
+	public RangeResult countKey(int start, int end) {
+		Map<String, Integer> countMap = new HashMap<>();
+		String key = "";
+
+		// start 와 end 가 list 의 범위안에 없으면 각각 최솟값과 최댓값으로 설정
+		if (start < 0) {
+			start = 0;
+			System.out.println("시작 범위가 음수이므로 0부터 찾습니다.");
+		}
+
+		if (end > logList.size()) {
+			end = logList.size();
+			System.out.println("끝 범위가 데이터의 개수를 초과했습니다. 최댓값까지 찾습니다.");
+		}
+
+		for (LogDTO dto : logList) {
+			// 값이 없는 경우 세지 않는 일 필요
+			if (dto.getLineNumber() >= start && dto.getLineNumber() <= end) {
+				key = dto.getKey();
+				if (!"".equals(key)) {
+					countMap.put(key, (countMap.getOrDefault(key, 0) + 1));
+				}
+			}
+		}
+
+		String topKey = "";
+		int topKeyCount = 0;
+
+		for (String temp : countMap.keySet()) {
+			if (topKeyCount < countMap.get(temp)) {
+				topKey = temp;
+				topKeyCount = countMap.get(temp);
+			}
+		}
+
+		return new RangeResult(start, end, topKey, topKeyCount);
+	}
+
 	// 2. 브라우져 별 접속 횟수, 비율 구하고 DTO 에 저장
 	public void countBrowser() {
 		Map<String, Integer> countMap = new HashMap<>();
@@ -61,7 +101,7 @@ public class AnalysisService {
 		}
 
 		for (String key : countMap.keySet()) {
-			perMap.put(key, ((double) countMap.get(key) / logList.size()));
+			perMap.put(key, ((double) countMap.get(key) / logList.size() * 100));
 		}
 
 		analysisResult.setBrowserCount(countMap);
