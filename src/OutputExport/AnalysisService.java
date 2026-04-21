@@ -90,6 +90,10 @@ public class AnalysisService {
 		analysisResult.setSuccess200Count(success200Count);
 		analysisResult.setFail404Count(fail404Count);
 	}
+	
+	//4. 요청이 가장 많은 시간 
+	//5. 비정상적인 요청이 발생한 횟수 비율 
+	//6. Books에 대한 요청중 url중 에러가 발생한 횟수,비율 구하기
 
 	public AnalysisResult getAnalysisResult() {
 		return analysisResult;
