@@ -103,9 +103,9 @@ public class LoginView {
 	/**
 	 * test용 향후 삭제
 	 * @param args
-	 */
-	public static void main(String[] args) {
-		new LoginView();
-	}// main
+//	 */
+//	public static void main(String[] args) {
+//		new LoginView();
+//	}// main
 	
 }// class
