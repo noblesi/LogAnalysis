@@ -22,9 +22,12 @@ public class LogParse {
 	private List<LogDTO> logList = new ArrayList<LogDTO>(); // LogDTO들이 저장되는 List
 	private int lineNumber = 1; // 몇번째 라인인지 표기하기 위한 수
 
-	public LogParse() throws IOException {
-		// 파일 경로로 수정 필요함
-		String path = "C:/dev/07.조별과제/sist_input_1.log";
+	/**
+	 * 메인에서 JFileChooser로 파일선택 예정
+	 * @param path 경로설정
+	 * @throws IOException
+	 */
+	public LogParse(String path) throws IOException {
 		parseLog(path);
 	}
 
