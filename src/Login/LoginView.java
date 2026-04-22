@@ -1,92 +1,78 @@
 package Login;
 
 import java.awt.GridLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 
-public class LoginView {
+public class LoginView extends JFrame implements ActionListener{
+	
 	private String id;
 	private String password;
 	
 	private AuthService as;
 	
-	JFrame frm;
-	JPanel pan;
-	JLabel labId;
-	JLabel labPw;
-	JTextField tfId;
-	JPasswordField tfPw;
-	JButton okBt;
-	JButton cancleBt;
-	JButton inputBt;
-	
+	private JPanel pan;
+	private JLabel labId;
+	private JLabel labPw;
+	private JTextField tfId;
+	private JPasswordField tfPw;
+	private JButton okBt;
+	private JButton cancelBt;
+	private JButton inputBt;
 	
 	public LoginView() {
 		
+		this.setVisible(true);
+		
 		as = new AuthService();
 		
-		frm = new JFrame("로그인 창");
 		pan = new JPanel(new GridLayout(4,2));
 		labId = new JLabel("아이디");
 		labPw = new JLabel("비밀번호");
 		tfId = new JTextField();
 		tfPw = new JPasswordField();
 		okBt = new JButton("로그인");
-		cancleBt = new JButton("취소");
+		cancelBt = new JButton("취소");
 		inputBt = new JButton("회원가입");
 		
-		frm.setSize(300, 200);
-		frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frm.add(pan);
+		this.setSize(300, 200);
+		this.setResizable(false);
+//		this.setLocation(W, 1000);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		this.getRootPane().setDefaultButton(okBt);
+		this.add(pan);
 		pan.add(labId);
 		pan.add(tfId);
 		pan.add(labPw);
 		pan.add(tfPw);
 		pan.add(okBt);
-		pan.add(cancleBt);
+		pan.add(cancelBt);
 		pan.add(inputBt);
+		
+		
+		okBt.addActionListener(this);
+		cancelBt.addActionListener(this);
+		tfId.addActionListener(this);
+		tfPw.addActionListener(this);
+		
+		//처음 포커스 위치
+		tfId.grabFocus();
+		
 		inputBt.setVisible(false);
-		frm.setVisible(true);
-		
-		// 로그인 버튼을 눌렀을 때의 이벤트 처리
-		ActionListener alOk = new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				id = tfId.getText();
-				password = new String( tfPw.getPassword());
-				as.login(inputId(), inputPassword());
-				if(as.isLoginSuc()) {
-					System.out.println("로그인 성공");
-					frm.setVisible(false);
-				}// end if
-			}// end actionPerformed
-		};
-		
-		okBt.addActionListener(alOk);
-		
-		// 취소 버튼 눌럿을때의 이벤트 처리
-		ActionListener alCancle = new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "프로그램을 종료합니다.");
-				frm.dispose();
-			}// actionPerformed
-		};
-		
-		cancleBt.addActionListener(alCancle);
 		
 	}// LoginView
-	
+
 	public String inputId() {
 		return id;
 	}// inputId
@@ -96,16 +82,41 @@ public class LoginView {
 	}// inputPassword
 	
 	public void showMessage(String msg) {
-		
+		JOptionPane.showMessageDialog(this, msg);
 	}// showMessage
+
+	//이벤트 처리부분
+	@Override
+	public void actionPerformed(ActionEvent e) {
+//		System.out.println("이벤트 작용중" + tfPw.isFocusOwner());
+		
+//		tfId.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("enter"), "취소");
+//		if(tfId.isFocusOwner()) {
+//			tfPw.grabFocus();
+//		} else if(tfPw.isFocusOwner()) {
+//			okBt.grabFocus();
+//			okBt.doClick();
+//		}// end if
+		
+		switch(e.getActionCommand()) {
+		case "로그인" :
+//			System.out.println("로그인 버튼"); 
+			id = tfId.getText();
+			password = new String(tfPw.getPassword());
+			as.login(inputId(), inputPassword());
+			break;
+		case "취소" :
+//			System.out.println("취소 버튼");
+			showMessage("프로그램을 종료 합니다.");
+			this.dispose();
+			break;
+		case "회원가입" :
+			break;
+		}// end switch
+		
+	}// actionPerfromed
 	
-	
-	/**
-	 * test용 향후 삭제
-	 * @param args
-//	 */
 //	public static void main(String[] args) {
 //		new LoginView();
 //	}// main
-	
 }// class
