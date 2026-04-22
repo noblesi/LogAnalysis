@@ -1,22 +1,22 @@
 package Login;
 
 import java.awt.GridLayout;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.KeyStroke;
 
 public class LoginView extends JFrame implements ActionListener {
 
+	private final String LOGIN = "로그인";
+	private final String CANCEL = "취소";
+	private final String JOINMEM = "회원가입";
+	
 	private String id;
 	private String password;
 
@@ -99,7 +99,7 @@ public class LoginView extends JFrame implements ActionListener {
 //		}// end if
 
 		switch (e.getActionCommand()) {
-		case "로그인":
+		case LOGIN:
 //			System.out.println("로그인 버튼"); 
 			id = tfId.getText();
 			password = new String(tfPw.getPassword());
@@ -112,12 +112,12 @@ public class LoginView extends JFrame implements ActionListener {
 				this.setVisible(false);
 			} // end if
 			break;
-		case "취소":
+		case CANCEL:
 //			System.out.println("취소 버튼");
 			showMessage("프로그램을 종료 합니다.");
 			this.dispose();
 			break;
-		case "회원가입":
+		case JOINMEM:
 			break;
 		}// end switch
 
