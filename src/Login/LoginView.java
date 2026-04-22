@@ -15,13 +15,13 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
-public class LoginView extends JFrame implements ActionListener{
-	
+public class LoginView extends JFrame implements ActionListener {
+
 	private String id;
 	private String password;
-	
+
 	private AuthService as;
-	
+
 	private JPanel pan;
 	private JLabel labId;
 	private JLabel labPw;
@@ -30,14 +30,14 @@ public class LoginView extends JFrame implements ActionListener{
 	private JButton okBt;
 	private JButton cancelBt;
 	private JButton inputBt;
-	
+
 	public LoginView() {
-		
+
 		this.setVisible(true);
-		
+
 		as = new AuthService();
-		
-		pan = new JPanel(new GridLayout(4,2));
+
+		pan = new JPanel(new GridLayout(4, 2));
 		labId = new JLabel("아이디");
 		labPw = new JLabel("비밀번호");
 		tfId = new JTextField();
@@ -45,9 +45,10 @@ public class LoginView extends JFrame implements ActionListener{
 		okBt = new JButton("로그인");
 		cancelBt = new JButton("취소");
 		inputBt = new JButton("회원가입");
-		
+
 		this.setSize(300, 200);
 		this.setResizable(false);
+		this.setLocationRelativeTo(null);
 //		this.setLocation(W, 1000);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //		this.getRootPane().setDefaultButton(okBt);
@@ -59,37 +60,36 @@ public class LoginView extends JFrame implements ActionListener{
 		pan.add(okBt);
 		pan.add(cancelBt);
 		pan.add(inputBt);
-		
-		
+
 		okBt.addActionListener(this);
 		cancelBt.addActionListener(this);
 		tfId.addActionListener(this);
 		tfPw.addActionListener(this);
-		
-		//처음 포커스 위치
+
+		// 처음 포커스 위치
 		tfId.grabFocus();
-		
+
 		inputBt.setVisible(false);
-		
+
 	}// LoginView
 
 	public String inputId() {
 		return id;
 	}// inputId
-	
+
 	public String inputPassword() {
 		return password;
 	}// inputPassword
-	
+
 	public void showMessage(String msg) {
 		JOptionPane.showMessageDialog(this, msg);
 	}// showMessage
 
-	//이벤트 처리부분
+	// 이벤트 처리부분
 	@Override
 	public void actionPerformed(ActionEvent e) {
 //		System.out.println("이벤트 작용중" + tfPw.isFocusOwner());
-		
+
 //		tfId.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("enter"), "취소");
 //		if(tfId.isFocusOwner()) {
 //			tfPw.grabFocus();
@@ -97,25 +97,32 @@ public class LoginView extends JFrame implements ActionListener{
 //			okBt.grabFocus();
 //			okBt.doClick();
 //		}// end if
-		
-		switch(e.getActionCommand()) {
-		case "로그인" :
+
+		switch (e.getActionCommand()) {
+		case "로그인":
 //			System.out.println("로그인 버튼"); 
 			id = tfId.getText();
 			password = new String(tfPw.getPassword());
+
+			// Login 성공시 as가 유저정보를 반환 실패시 null
 			as.login(inputId(), inputPassword());
+
+			if (as.isLoginSuc()) {
+				showMessage(id + " 로그인 성공");
+				this.setVisible(false);
+			} // end if
 			break;
-		case "취소" :
+		case "취소":
 //			System.out.println("취소 버튼");
 			showMessage("프로그램을 종료 합니다.");
 			this.dispose();
 			break;
-		case "회원가입" :
+		case "회원가입":
 			break;
 		}// end switch
-		
+
 	}// actionPerfromed
-	
+//
 //	public static void main(String[] args) {
 //		new LoginView();
 //	}// main
