@@ -1,99 +1,129 @@
 package Login;
 
 import java.awt.GridLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 
-public class LoginView {
+public class LoginView extends JFrame implements ActionListener {
+
 	private String id;
 	private String password;
+
 	private AuthService as;
-	
-	private JFrame frm = null;
-	private JPanel pan = null;
-	private JLabel labId = null;
-	private JLabel labPw = null;
-	private JTextField tfId = null;
-	private JPasswordField tfPw = null;
-	private JButton btOk = null;
-	private JButton btCencle = null;
-	private JButton btInput = null;
-	
+
+	private JPanel pan;
+	private JLabel labId;
+	private JLabel labPw;
+	private JTextField tfId;
+	private JPasswordField tfPw;
+	private JButton okBt;
+	private JButton cancelBt;
+	private JButton inputBt;
+
 	public LoginView() {
+
+		this.setVisible(true);
+
 		as = new AuthService();
-		runLoginWindow();
-	}// LoginView
-	
-	public void runLoginWindow() {
-		
-		frm = new JFrame("로그인 창");
-		pan = new JPanel(new GridLayout(4,3));
+
+		pan = new JPanel(new GridLayout(4, 2));
 		labId = new JLabel("아이디");
 		labPw = new JLabel("비밀번호");
 		tfId = new JTextField();
 		tfPw = new JPasswordField();
-		btOk = new JButton("로그인");
-		btCencle = new JButton("취소");
-		btInput = new JButton("회원가입");
-		
-		
-		frm.setSize(300, 200);
-		frm.setLocation(0, 0);
-		frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frm.add(pan);
+		okBt = new JButton("로그인");
+		cancelBt = new JButton("취소");
+		inputBt = new JButton("회원가입");
+
+		this.setSize(300, 200);
+		this.setResizable(false);
+		this.setLocationRelativeTo(null);
+//		this.setLocation(W, 1000);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		this.getRootPane().setDefaultButton(okBt);
+		this.add(pan);
 		pan.add(labId);
 		pan.add(tfId);
 		pan.add(labPw);
 		pan.add(tfPw);
-		pan.add(btOk);
-		pan.add(btCencle);
-		pan.add(btInput);
-		
-		// 로그인 버튼을 눌렀을때 이벤트 처리
-		ActionListener alOkBt = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				id = tfId.getText(); 
-				password = new String(tfPw.getPassword());
-				System.out.println(id + " / " + password);
-				as.login(inputId(), inputPassword());
-			}// actionPerformed
-		};
-		btOk.addActionListener(alOkBt);
-		
-		ActionListener alCancleBt = new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "프로그램을 종료 합니다.");
-//				frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				frm.dispose();
-			}// actionPerformed
-		};
-		btCencle.addActionListener(alCancleBt);
-		
-		btInput.setVisible(false);
-		frm.setVisible(true);
-	}// runLoginWindow
-	
+		pan.add(okBt);
+		pan.add(cancelBt);
+		pan.add(inputBt);
+
+		okBt.addActionListener(this);
+		cancelBt.addActionListener(this);
+		tfId.addActionListener(this);
+		tfPw.addActionListener(this);
+
+		// 처음 포커스 위치
+		tfId.grabFocus();
+
+		inputBt.setVisible(false);
+
+	}// LoginView
+
 	public String inputId() {
 		return id;
 	}// inputId
-	
+
 	public String inputPassword() {
 		return password;
 	}// inputPassword
-	
+
 	public void showMessage(String msg) {
-		
+		JOptionPane.showMessageDialog(this, msg);
 	}// showMessage
-	
+
+	// 이벤트 처리부분
+	@Override
+	public void actionPerformed(ActionEvent e) {
+//		System.out.println("이벤트 작용중" + tfPw.isFocusOwner());
+
+//		tfId.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("enter"), "취소");
+//		if(tfId.isFocusOwner()) {
+//			tfPw.grabFocus();
+//		} else if(tfPw.isFocusOwner()) {
+//			okBt.grabFocus();
+//			okBt.doClick();
+//		}// end if
+
+		switch (e.getActionCommand()) {
+		case "로그인":
+//			System.out.println("로그인 버튼"); 
+			id = tfId.getText();
+			password = new String(tfPw.getPassword());
+
+			// Login 성공시 as가 유저정보를 반환 실패시 null
+			as.login(inputId(), inputPassword());
+
+			if (as.isLoginSuc()) {
+				showMessage(id + " 로그인 성공");
+				this.setVisible(false);
+			} // end if
+			break;
+		case "취소":
+//			System.out.println("취소 버튼");
+			showMessage("프로그램을 종료 합니다.");
+			this.dispose();
+			break;
+		case "회원가입":
+			break;
+		}// end switch
+
+	}// actionPerfromed
+//
+//	public static void main(String[] args) {
+//		new LoginView();
+//	}// main
 }// class

@@ -10,9 +10,11 @@ import javax.swing.JOptionPane;
 public class AuthService {
 	private Map<String, User> userMap;
 	
+	private boolean loginSuc;
+	
 	public AuthService() {
 		userMap = new HashMap<String, User>();
-		
+		loginSuc = false;
 		userMap.put("admin", new User("admin","1234", Role.ADMIN));
 		userMap.put("admin", new User("administrator","12345", Role.ADMINISTRATOR));
 		userMap.put("root", new User("root","1111", Role.ROOT));
@@ -31,7 +33,9 @@ public class AuthService {
 		
 		if(userMap.containsKey(id)) {
 			user = userMap.get(id);
+			loginSuc = true;
 			if(!user.getPassword().toString().equals(password)) {
+				loginSuc = false;
 				JOptionPane.showMessageDialog(null, "비밀번호가 맞지 않습니다.");
 			}// end if
 		} else {
@@ -49,5 +53,15 @@ public class AuthService {
 	public void setUserMap(Map<String, User> userMap) {
 		this.userMap = userMap;
 	}// setUserMap
+
+	public boolean isLoginSuc() {
+		return loginSuc;
+	}// isLoginSuc
+
+	public void setLoginSuc(boolean loginSuc) {
+		this.loginSuc = loginSuc;
+	}// setLoginSuc
+	
+	
 	
 }// class
