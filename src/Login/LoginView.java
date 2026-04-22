@@ -1,129 +1,76 @@
 package Login;
 
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFrame;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class LoginView extends JFrame implements ActionListener {
+public class LoginView {
 
-	private final String LOGIN = "로그인";
-	private final String CANCEL = "취소";
-	private final String JOINMEM = "회원가입";
-	
 	private String id;
 	private String password;
-
-	private AuthService as;
-
-	private JPanel pan;
-	private JLabel labId;
-	private JLabel labPw;
-	private JTextField tfId;
-	private JPasswordField tfPw;
-	private JButton okBt;
-	private JButton cancelBt;
-	private JButton inputBt;
+	private final AuthService authService;
 
 	public LoginView() {
-
-		this.setVisible(true);
-
-		as = new AuthService();
-
-		pan = new JPanel(new GridLayout(4, 2));
-		labId = new JLabel("아이디");
-		labPw = new JLabel("비밀번호");
-		tfId = new JTextField();
-		tfPw = new JPasswordField();
-		okBt = new JButton("로그인");
-		cancelBt = new JButton("취소");
-		inputBt = new JButton("회원가입");
-
-		this.setSize(300, 200);
-		this.setResizable(false);
-		this.setLocationRelativeTo(null);
-//		this.setLocation(W, 1000);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		this.getRootPane().setDefaultButton(okBt);
-		this.add(pan);
-		pan.add(labId);
-		pan.add(tfId);
-		pan.add(labPw);
-		pan.add(tfPw);
-		pan.add(okBt);
-		pan.add(cancelBt);
-		pan.add(inputBt);
-
-		okBt.addActionListener(this);
-		cancelBt.addActionListener(this);
-		tfId.addActionListener(this);
-		tfPw.addActionListener(this);
-
-		// 처음 포커스 위치
-		tfId.grabFocus();
-
-		inputBt.setVisible(false);
-
-	}// LoginView
+		authService = new AuthService();
+	}
 
 	public String inputId() {
 		return id;
-	}// inputId
+	}
 
 	public String inputPassword() {
 		return password;
-	}// inputPassword
+	}
+
+	public User login() {
+		while (true) {
+			JTextField idField = new JTextField();
+			JPasswordField passwordField = new JPasswordField();
+
+			if (id != null) {
+				idField.setText(id);
+			}
+
+			JPanel panel = new JPanel(new GridLayout(2, 2, 8, 8));
+			panel.add(new JLabel("아이디"));
+			panel.add(idField);
+			panel.add(new JLabel("비밀번호"));
+			panel.add(passwordField);
+
+			int option = JOptionPane.showConfirmDialog(
+					null,
+					panel,
+					"로그인",
+					JOptionPane.OK_CANCEL_OPTION,
+					JOptionPane.PLAIN_MESSAGE);
+
+			if (option != JOptionPane.OK_OPTION) {
+				return null;
+			}
+
+			id = idField.getText().trim();
+			password = new String(passwordField.getPassword());
+
+			if (id.isEmpty() || password.isEmpty()) {
+				showMessage("아이디와 비밀번호를 모두 입력하세요.");
+				continue;
+			}
+
+			User user = authService.login(inputId(), inputPassword());
+			if (user != null) {
+				showMessage(user.getId() + " 로그인 성공");
+				return user;
+			}
+
+			showMessage("아이디 또는 비밀번호가 올바르지 않습니다.");
+		}
+	}
 
 	public void showMessage(String msg) {
-		JOptionPane.showMessageDialog(this, msg);
-	}// showMessage
-
-	// 이벤트 처리부분
-	@Override
-	public void actionPerformed(ActionEvent e) {
-//		System.out.println("이벤트 작용중" + tfPw.isFocusOwner());
-
-//		tfId.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("enter"), "취소");
-//		if(tfId.isFocusOwner()) {
-//			tfPw.grabFocus();
-//		} else if(tfPw.isFocusOwner()) {
-//			okBt.grabFocus();
-//			okBt.doClick();
-//		}// end if
-
-		switch (e.getActionCommand()) {
-		case LOGIN:
-//			System.out.println("로그인 버튼"); 
-			id = tfId.getText();
-			password = new String(tfPw.getPassword());
-
-			// Login 성공시 as가 유저정보를 반환 실패시 null
-			as.login(inputId(), inputPassword());
-
-			if (as.isLoginSuc()) {
-				showMessage(id + " 로그인 성공");
-				this.setVisible(false);
-			} // end if
-			break;
-		case CANCEL:
-//			System.out.println("취소 버튼");
-			showMessage("프로그램을 종료 합니다.");
-			this.dispose();
-			break;
-		case JOINMEM:
-			break;
-		}// end switch
-
-	}// actionPerfromed
-//
-//	public static void main(String[] args) {
-//		new LoginView();
-//	}// main
-}// class
+		JOptionPane.showMessageDialog(null, msg);
+	}
+}
