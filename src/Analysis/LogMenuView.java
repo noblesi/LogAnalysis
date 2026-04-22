@@ -5,90 +5,117 @@ import javax.swing.JOptionPane;
 
 public class LogMenuView {
 
+	private String currentUserId;
+	private String currentUserRole;
+
 	/**
-	 * @param userId 대경님이 넘겨줄 로그인 아이디
+	 * @param userObj 로그인 성공 시 AuthService로부터 전달받을 User 객체
 	 */
-	public void displayMenu(String userId) {
 
-		while (true) { // 코드 무한 반복
+	public void displayMenu(Object userObj) {
+        //테스트용 임시 값
+		this.currentUserId = (userObj != null) ? userObj.toString() : "guest";
+		this.currentUserRole = "ROOT";
 
+		while (true) {
 			// 1. 팀 규칙에 따른 메뉴 구성
-			String menu = "[SIST 로그 분석 시스템]\n" // 변수 선언 및 초기화
-					+ "접속 계정:" + userId + "\n"
+			String menu = "[SIST 로그 분석 시스템]\n" 
+			        + "접속 계정 : " + this.currentUserId + " (" + this.currentUserRole + ")\n"
 					+ "----------------------------\n" 
-					+ "1. 모든 분석 결과 화면 출력\n"
-					+ "2. 보고서 파일 생성(Report)\n" 
+			        + "1. 모든 분석 결과 화면 출력\n" + "2. 보고서 파일 생성(Report)\n"
 					+ "3. 특정 라인 범위 분석\n" 
 					+ "4. 프로그램 종료\n" 
-					+ "----------------------------\n"
+					+ "----------------------------\n" 
 					+ "원하는 번호를 선택하세요.";
-			
+
 			String input = JOptionPane.showInputDialog(null, menu, "메뉴", JOptionPane.QUESTION_MESSAGE);
 
 			// 2.종료 및 취소 처리
 			if (input == null || "4".equals(input)) {
 				JOptionPane.showMessageDialog(null, "프로그램을 종료합니다.");
 				break;
-			
 			} // end if
 
-			//3. 메뉴별 기능 분리
+			processCommand(input);
+		} // end while
+	}// end displayMenu
 
-			switch (input) {
-			case "1": // 박정욱님 기능 호출 (화면출력 method 호출)
-				JOptionPane.showMessageDialog(null, "분석 결과 화면을 준비합니다.");
-				break;
-				
-			case "2":
-				// [보안] root 계정 권한 제한 
-				if ("root".equals(userId)) {
-					JOptionPane.showMessageDialog(null, "관리자(root)는 리포트 생성 권한이 없습니다.", "권한 오류",
-							JOptionPane.ERROR_MESSAGE);
-				} else {				
-					showSavePath();
-				} // end else
-				break;
-				
-			case "3":
-				System.out.println(">>> 3번 선택 :범위 분석");
-				processRangeInput(); // 범위를 입력받는 method로 보냄
-				break;
+	// 3. 메뉴별 분기 로직
+	private void processCommand(String input) {
+		switch (input) {
+		case "1": // 분석결과 출력
+			JOptionPane.showMessageDialog(null, "분석 결과 화면을 준비합니다.");
+			break;
 
-			default:
-				JOptionPane.showMessageDialog(null, "잘못된 입력입니다. 1~3.번을 눌러주세요.");
-				break;
+		case "2":
+			// [보안] ROOT 계정 확인
+			if ("ROOT".equalsIgnoreCase(this.currentUserRole)) {
+				showError("관리자(ROOT)는 리포트 생성 권한이 없습니다.");
+			} else {
+				if (selectSaveLocation() == 1) {
 
-			}// end switch
+				} // end if
+			} // end else
+			break;
 
-		} // while
+		case "3":
+			int start = inputStartLine();
+			int end = inputEndLine();
 
-	}// displayMenu
+			if (start != -1 && end != -1) {
+				showResult(start + " ~ " + end + " 라인 분석을 시작합니다.");
+			} // end if
+			break;
 
-	// 보조 method 1
-	private void showSavePath() {
-		System.out.println("--console] showSavePath()진입---");
+		default:
+			showError("1~4번 사이의 번호를 입력해주세요.");
+			break;
+
+		}// end switch
+	} // while
+
+	// 보조 method
+
+	private int selectSaveLocation() {
 		JFileChooser chooser = new JFileChooser();
-		int result = chooser.showSaveDialog(null);
-
-		if (result == JFileChooser.APPROVE_OPTION) {
+		if (chooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
 			String path = chooser.getSelectedFile().getPath();
-			JOptionPane.showMessageDialog(null, "저장 위치 완료:\n" + path);
-			System.out.println("선택된 경로:" + path);
-
+			showResult("저장 경로가 설정되었습니다:\n" + path);
+			return 1;
 		} // end if
+		return 0;
+	} // end selectSaveLocation
 
-	}// showSavePath
+	// 숫자 입력 창 (시작 라인)
+	public int inputStartLine() {
+		String val = JOptionPane.showInputDialog(null, "시작 라인을 입력하세요.");
+		try {
+			return (val == null || val.isEmpty()) ? -1 : Integer.parseInt(val);
+		} catch (NumberFormatException e) {
+			showError("숫자만 입력 가능합니다.");
+			return -1;
+		} // end catch
+	} // end inputStartLine
 
-	// 보조 메서드 2
-	private void processRangeInput() {
-		System.out.println("---[console] processRangeInput() 진입---");
-		String range = JOptionPane.showInputDialog(null, "범위 분석", JOptionPane.QUESTION_MESSAGE);
+	// 숫자 입력 창 (종료 라인)
+	public int inputEndLine() {
+		String val = JOptionPane.showInputDialog(null, "종료 라인을 입력하세요.");
+		try {
+			return (val == null || val.isEmpty()) ? -1 : Integer.parseInt(val);
+		} catch (NumberFormatException e) {
+			showError("숫자만 입력 가능합니다.");
+			return -1;
+		} // end catch
+	} // end inputEndLine
 
-		if (range != null && !range.isEmpty()) {
-			JOptionPane.showMessageDialog(null, "[" + range + "]라인 분석을 시작합니다.");
-			System.out.println("입력된 범위:" + range);
+	//  공통 알림 창
+	public void showResult(String reportText) {
+		JOptionPane.showMessageDialog(null, reportText, "Result", JOptionPane.INFORMATION_MESSAGE);
+	} // end showResult
 
-		} // end if
-	}// processRangeInput
+	//  공통 에러 창
+	public void showError(String msg) {
+		JOptionPane.showMessageDialog(null, msg, "Error", JOptionPane.ERROR_MESSAGE);
+	} // end showError
 
-}// class
+} // end class
