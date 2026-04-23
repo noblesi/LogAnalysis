@@ -6,7 +6,9 @@ import java.util.Map;
 
 public class AuthService {
 	private Map<String, User> userMap;
-
+	
+	private boolean loginSuc;
+	
 	public AuthService() {
 		userMap = new HashMap<String, User>();
 		loginSuc = false;
