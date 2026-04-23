@@ -9,10 +9,12 @@ public class AuthService {
 
 	public AuthService() {
 		userMap = new HashMap<String, User>();
-		userMap.put("admin", new User("admin", "1234", Role.ADMIN));
-		userMap.put("administrator", new User("administrator", "12345", Role.ADMINISTRATOR));
-		userMap.put("root", new User("root", "1111", Role.ROOT));
-	}
+		loginSuc = false;
+		userMap.put("admin", new User("admin","1234", Role.ADMIN));
+		userMap.put("administrator", new User("administrator","12345", Role.ADMINISTRATOR));
+		userMap.put("root", new User("root","1111", Role.ROOT));
+		
+	}// AuthService
 
 	public User login(String id, String password) {
 		if (id == null || password == null) {
