@@ -38,10 +38,10 @@ public class ReportService {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("[ 로그 분석 결과 ]\n");
-		sb.append(repeat("-", 52)).append("\n");
+		sb.append(repeat("-", 44)).append("\n");
 		sb.append("파일명      : ").append(extractBaseFileName(result.getSourceFileName())).append("\n");
 		sb.append("생성 일시   : ").append(nullSafe(result.getLogCreatedDate())).append("\n");
-		sb.append(repeat("-", 52)).append("\n\n");
+		sb.append(repeat("-", 44)).append("\n\n");
 
 		sb.append("1. 최다 사용 키\n");
 		sb.append("   - 키 이름 : ").append(nullSafe(result.getTopKey())).append("\n");
