@@ -6,6 +6,7 @@
 
 # Package files
 *.jar
+!dist/LogAnalysis.jar
 *.war
 *.nar
 *.ear
