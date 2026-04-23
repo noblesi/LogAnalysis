@@ -16,7 +16,7 @@ public class AuthService {
 		userMap = new HashMap<String, User>();
 		loginSuc = false;
 		userMap.put("admin", new User("admin","1234", Role.ADMIN));
-		userMap.put("admin", new User("administrator","12345", Role.ADMINISTRATOR));
+		userMap.put("administrator", new User("administrator","12345", Role.ADMINISTRATOR));
 		userMap.put("root", new User("root","1111", Role.ROOT));
 		
 	}// AuthService
