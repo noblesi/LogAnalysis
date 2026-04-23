@@ -1,118 +1,118 @@
 <mxfile host="app.diagrams.net" agent="Codex">
   <diagram id="class-diagram" name="Class Diagram">
-    <mxGraphModel dx="1600" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1400" math="0" shadow="0">
+    <mxGraphModel dx="2175" dy="1223" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1400" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="pkg-analysis" value="Package: Analysis" style="swimlane;html=1;startSize=28;rounded=0;shadow=0;strokeColor=#6C8EBF;fillColor=#DAE8FC;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="40" y="40" width="440" height="640" as="geometry" />
+        <mxCell id="pkg-analysis" parent="1" style="swimlane;html=1;startSize=28;rounded=0;shadow=0;strokeColor=#6C8EBF;fillColor=#DAE8FC;fontStyle=1;" value="Package: Analysis" vertex="1">
+          <mxGeometry height="640" width="440" x="40" y="40" as="geometry" />
         </mxCell>
-        <mxCell id="mainapp" value="MainApp&#xa;----------------&#xa;+ main(args : String[]) : void" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=8;spacingTop=6;fontStyle=1;strokeColor=#000000;fillColor=#FFFFFF;" vertex="1" parent="pkg-analysis">
-          <mxGeometry x="20" y="50" width="180" height="80" as="geometry" />
+        <mxCell id="mainapp" parent="pkg-analysis" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=8;spacingTop=6;fontStyle=1;strokeColor=#000000;fillColor=#FFFFFF;" value="MainApp&#xa;----------------&#xa;+ main(args : String[]) : void" vertex="1">
+          <mxGeometry height="80" width="180" x="20" y="50" as="geometry" />
         </mxCell>
-        <mxCell id="run" value="Run&#xa;----------------&#xa;+ start() : void" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=8;spacingTop=6;fontStyle=1;strokeColor=#000000;fillColor=#FFFFFF;" vertex="1" parent="pkg-analysis">
-          <mxGeometry x="230" y="50" width="180" height="80" as="geometry" />
+        <mxCell id="run" parent="pkg-analysis" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=8;spacingTop=6;fontStyle=1;strokeColor=#000000;fillColor=#FFFFFF;" value="Run&#xa;----------------&#xa;+ start() : void" vertex="1">
+          <mxGeometry height="80" width="180" x="230" y="50" as="geometry" />
         </mxCell>
-        <mxCell id="logmenuview" value="LogMenuView&#xa;----------------&#xa;- analysisService : AnalysisService&#xa;- reportService : ReportService&#xa;- currentUser : User&#xa;- currentLogPath : String&#xa;----------------&#xa;+ LogMenuView()&#xa;+ displayMenu(user : User) : void&#xa;- processCommand(input : String) : void&#xa;- showAllAnalysis() : void&#xa;- createReportFile() : void&#xa;- showRangeAnalysis() : void&#xa;- changeLogFile() : void&#xa;+ inputStartLine() : int&#xa;+ inputEndLine() : int&#xa;- parseLineNumber(message : String) : int&#xa;+ showResult(reportText : String) : void&#xa;+ showError(msg : String) : void&#xa;- showTextDialog(title : String, text : String) : void&#xa;- requireSelectedLogFile() : boolean&#xa;- selectLogFilePath() : String&#xa;- getCurrentLogName() : String&#xa;- safe(value : String) : String" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=8;spacingTop=6;fontStyle=1;strokeColor=#000000;fillColor=#FFFFFF;" vertex="1" parent="pkg-analysis">
-          <mxGeometry x="20" y="170" width="390" height="440" as="geometry" />
+        <mxCell id="logmenuview" parent="pkg-analysis" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=8;spacingTop=6;fontStyle=1;strokeColor=#000000;fillColor=#FFFFFF;" value="LogMenuView&#xa;----------------&#xa;- analysisService : AnalysisService&#xa;- reportService : ReportService&#xa;- currentUser : User&#xa;- currentLogPath : String&#xa;----------------&#xa;+ LogMenuView()&#xa;+ displayMenu(user : User) : void&#xa;- processCommand(input : String) : void&#xa;- showAllAnalysis() : void&#xa;- createReportFile() : void&#xa;- showRangeAnalysis() : void&#xa;- changeLogFile() : void&#xa;+ inputStartLine() : int&#xa;+ inputEndLine() : int&#xa;- parseLineNumber(message : String) : int&#xa;+ showResult(reportText : String) : void&#xa;+ showError(msg : String) : void&#xa;- showTextDialog(title : String, text : String) : void&#xa;- requireSelectedLogFile() : boolean&#xa;- selectLogFilePath() : String&#xa;- getCurrentLogName() : String&#xa;- safe(value : String) : String" vertex="1">
+          <mxGeometry height="440" width="390" x="20" y="170" as="geometry" />
         </mxCell>
-        <mxCell id="pkg-output" value="Package: OutputExport" style="swimlane;html=1;startSize=28;rounded=0;shadow=0;strokeColor=#9673A6;fillColor=#E1D5E7;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="520" y="40" width="700" height="620" as="geometry" />
+        <mxCell id="pkg-output" parent="1" style="swimlane;html=1;startSize=28;rounded=0;shadow=0;strokeColor=#9673A6;fillColor=#E1D5E7;fontStyle=1;" value="Package: OutputExport" vertex="1">
+          <mxGeometry height="640" width="710" x="520" y="40" as="geometry" />
         </mxCell>
-        <mxCell id="analysisservice" value="AnalysisService&#xa;----------------&#xa;- analysisResult : AnalysisResult&#xa;- logList : List&lt;LogDTO&gt;&#xa;----------------&#xa;+ AnalysisService(path : String)&#xa;- setFileInfo(path : String) : void&#xa;+ countKey() : void&#xa;+ countBrowser() : void&#xa;+ countStatusCode() : void&#xa;+ countPeakHour() : void&#xa;+ countForBidden403() : void&#xa;+ countBooks500() : void&#xa;+ analysisRange(startLine : int, endLine : int) : RangeResult&#xa;+ countKey(start : int, end : int) : RangeResult&#xa;+ getAnalysisResult() : AnalysisResult" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=8;spacingTop=6;fontStyle=1;strokeColor=#000000;fillColor=#FFFFFF;" vertex="1" parent="pkg-output">
-          <mxGeometry x="20" y="50" width="310" height="320" as="geometry" />
+        <mxCell id="analysisservice" parent="pkg-output" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=8;spacingTop=6;fontStyle=1;strokeColor=#000000;fillColor=#FFFFFF;" value="AnalysisService&#xa;----------------&#xa;- analysisResult : AnalysisResult&#xa;- logList : List&lt;LogDTO&gt;&#xa;----------------&#xa;+ AnalysisService(path : String)&#xa;- setFileInfo(path : String) : void&#xa;+ countKey() : void&#xa;+ countBrowser() : void&#xa;+ countStatusCode() : void&#xa;+ countPeakHour() : void&#xa;+ countForBidden403() : void&#xa;+ countBooks500() : void&#xa;+ analysisRange(startLine : int, endLine : int) : RangeResult&#xa;+ countKey(start : int, end : int) : RangeResult&#xa;+ getAnalysisResult() : AnalysisResult" vertex="1">
+          <mxGeometry height="320" width="310" x="20" y="50" as="geometry" />
         </mxCell>
-        <mxCell id="analysisresult" value="AnalysisResult&#xa;----------------&#xa;- sourceFileName : String&#xa;- logCreatedDate : String&#xa;- topKey : String&#xa;- topKeyCount : int&#xa;- browserCount : Map&lt;String, Integer&gt;&#xa;- browserRate : Map&lt;String, Double&gt;&#xa;- success200Count : int&#xa;- fail404Count : int&#xa;- peakHour : int&#xa;- forbidden403Count : int&#xa;- forbidden403Rate : double&#xa;- books500Count : int&#xa;- books500Rate : double&#xa;----------------&#xa;+ AnalysisResult()&#xa;+ getters / setters&#xa;+ toString() : String" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=8;spacingTop=6;fontStyle=1;strokeColor=#000000;fillColor=#FFFFFF;" vertex="1" parent="pkg-output">
-          <mxGeometry x="360" y="50" width="310" height="320" as="geometry" />
+        <mxCell id="analysisresult" parent="pkg-output" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=8;spacingTop=6;fontStyle=1;strokeColor=#000000;fillColor=#FFFFFF;" value="AnalysisResult&#xa;----------------&#xa;- sourceFileName : String&#xa;- logCreatedDate : String&#xa;- topKey : String&#xa;- topKeyCount : int&#xa;- browserCount : Map&lt;String, Integer&gt;&#xa;- browserRate : Map&lt;String, Double&gt;&#xa;- success200Count : int&#xa;- fail404Count : int&#xa;- peakHour : int&#xa;- forbidden403Count : int&#xa;- forbidden403Rate : double&#xa;- books500Count : int&#xa;- books500Rate : double&#xa;----------------&#xa;+ AnalysisResult()&#xa;+ getters / setters&#xa;+ toString() : String" vertex="1">
+          <mxGeometry height="320" width="310" x="360" y="50" as="geometry" />
         </mxCell>
-        <mxCell id="reportservice" value="ReportService&#xa;----------------&#xa;+ makeScreenText(result : AnalysisResult, rangeResult : RangeResult) : String&#xa;+ writeFile(result : AnalysisResult, rangeResult : RangeResult) : String&#xa;- buildReportText(result : AnalysisResult, range : RangeResult, includeRange : boolean) : String&#xa;- extractBaseFileName(fileName : String) : String&#xa;- nullSafe(str : String) : String" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=8;spacingTop=6;fontStyle=1;strokeColor=#000000;fillColor=#FFFFFF;" vertex="1" parent="pkg-output">
-          <mxGeometry x="20" y="420" width="310" height="150" as="geometry" />
+        <mxCell id="reportservice" parent="pkg-output" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=8;spacingTop=6;fontStyle=1;strokeColor=#000000;fillColor=#FFFFFF;" value="ReportService&#xa;----------------&#xa;+ makeScreenText(result : AnalysisResult, rangeResult : RangeResult) : String&#xa;+ writeFile(result : AnalysisResult, rangeResult : RangeResult) : String&#xa;- buildReportText(result : AnalysisResult, range : RangeResult, includeRange : boolean) : String&#xa;- extractBaseFileName(fileName : String) : String&#xa;- nullSafe(str : String) : String" vertex="1">
+          <mxGeometry height="170" width="310" x="20" y="420" as="geometry" />
         </mxCell>
-        <mxCell id="rangeresult" value="RangeResult&#xa;----------------&#xa;- startLine : int&#xa;- endLine : int&#xa;- topKey : String&#xa;- topKeyCount : int&#xa;----------------&#xa;+ RangeResult()&#xa;+ RangeResult(startLine : int, endLine : int, topKey : String, topKeyCount : int)&#xa;+ getters / setters" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=8;spacingTop=6;fontStyle=1;strokeColor=#000000;fillColor=#FFFFFF;" vertex="1" parent="pkg-output">
-          <mxGeometry x="360" y="430" width="310" height="140" as="geometry" />
+        <mxCell id="rangeresult" parent="pkg-output" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=8;spacingTop=6;fontStyle=1;strokeColor=#000000;fillColor=#FFFFFF;" value="RangeResult&#xa;----------------&#xa;- startLine : int&#xa;- endLine : int&#xa;- topKey : String&#xa;- topKeyCount : int&#xa;----------------&#xa;+ RangeResult()&#xa;+ RangeResult(startLine : int, endLine : int, topKey : String, topKeyCount : int)&#xa;+ getters / setters" vertex="1">
+          <mxGeometry height="170" width="320" x="360" y="420" as="geometry" />
         </mxCell>
-        <mxCell id="pkg-parse" value="Package: parse" style="swimlane;html=1;startSize=28;rounded=0;shadow=0;strokeColor=#82B366;fillColor=#D5E8D4;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="1260" y="40" width="520" height="520" as="geometry" />
+        <mxCell id="pkg-parse" parent="1" style="swimlane;html=1;startSize=28;rounded=0;shadow=0;strokeColor=#82B366;fillColor=#D5E8D4;fontStyle=1;" value="Package: parse" vertex="1">
+          <mxGeometry height="640" width="660" x="1260" y="40" as="geometry" />
         </mxCell>
-        <mxCell id="logparse" value="LogParse&#xa;----------------&#xa;+ RESPONSE_RESULT : int&#xa;+ URL : int&#xa;+ BROWSER : int&#xa;+ LOG_TIME : int&#xa;- logList : List&lt;LogDTO&gt;&#xa;- lineNumber : int&#xa;----------------&#xa;+ LogParse(path : String)&#xa;- parseLog(path : String) : void&#xa;- parseStatusCode(code : String) : StatusCode&#xa;- parseUrl(requestPath : String) : String&#xa;- parseKey(requestPath : String) : String&#xa;- parseLogTime(rawTime : String, formatter : DateTimeFormatter) : LocalDateTime&#xa;+ getLogList() : List&lt;LogDTO&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=8;spacingTop=6;fontStyle=1;strokeColor=#000000;fillColor=#FFFFFF;" vertex="1" parent="pkg-parse">
-          <mxGeometry x="20" y="50" width="320" height="350" as="geometry" />
+        <mxCell id="logparse" parent="pkg-parse" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=8;spacingTop=6;fontStyle=1;strokeColor=#000000;fillColor=#FFFFFF;" value="LogParse&#xa;----------------&#xa;+ RESPONSE_RESULT : int&#xa;+ URL : int&#xa;+ BROWSER : int&#xa;+ LOG_TIME : int&#xa;- logList : List&lt;LogDTO&gt;&#xa;- lineNumber : int&#xa;----------------&#xa;+ LogParse(path : String)&#xa;- parseLog(path : String) : void&#xa;- parseStatusCode(code : String) : StatusCode&#xa;- parseUrl(requestPath : String) : String&#xa;- parseKey(requestPath : String) : String&#xa;- parseLogTime(rawTime : String, formatter : DateTimeFormatter) : LocalDateTime&#xa;+ getLogList() : List&lt;LogDTO&gt;" vertex="1">
+          <mxGeometry height="490" width="320" x="20" y="50" as="geometry" />
         </mxCell>
-        <mxCell id="logdto" value="LogDTO&#xa;----------------&#xa;- lineNumber : int&#xa;- responseResult : StatusCode&#xa;- url : String&#xa;- key : String&#xa;- browser : String&#xa;- time : LocalDateTime&#xa;----------------&#xa;+ LogDTO(lineNumber : int, responseResult : StatusCode, url : String, key : String, browser : String, time : LocalDateTime)&#xa;+ getters&#xa;+ toString() : String" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=8;spacingTop=6;fontStyle=1;strokeColor=#000000;fillColor=#FFFFFF;" vertex="1" parent="pkg-parse">
-          <mxGeometry x="360" y="50" width="140" height="240" as="geometry" />
+        <mxCell id="logdto" parent="pkg-parse" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=8;spacingTop=6;fontStyle=1;strokeColor=#000000;fillColor=#FFFFFF;" value="LogDTO&#xa;----------------&#xa;- lineNumber : int&#xa;- responseResult : StatusCode&#xa;- url : String&#xa;- key : String&#xa;- browser : String&#xa;- time : LocalDateTime&#xa;----------------&#xa;+ LogDTO(lineNumber : int, responseResult : StatusCode, url : String, key : String, browser : String, time : LocalDateTime)&#xa;+ getters&#xa;+ toString() : String" vertex="1">
+          <mxGeometry height="240" width="260" x="360" y="50" as="geometry" />
         </mxCell>
-        <mxCell id="statuscode" value="&lt;&lt;enumeration&gt;&gt;&#xa;StatusCode&#xa;----------------&#xa;- code : int&#xa;- resultMsg : String&#xa;----------------&#xa;OK&#xa;FORBIDDEN&#xa;NOT_FOUND&#xa;SERVER_ERROR&#xa;----------------&#xa;+ getCode() : int&#xa;+ getResultMsg() : String" style="rounded=0;whiteSpace=wrap;html=1;align=center;spacingTop=6;fontStyle=1;strokeColor=#000000;fillColor=#FFF2CC;" vertex="1" parent="pkg-parse">
-          <mxGeometry x="360" y="320" width="140" height="160" as="geometry" />
+        <mxCell id="statuscode" parent="pkg-parse" style="rounded=0;whiteSpace=wrap;html=1;align=center;spacingTop=6;fontStyle=1;strokeColor=#000000;fillColor=#FFF2CC;" value="&lt;&lt;enumeration&gt;&gt;&#xa;StatusCode&#xa;----------------&#xa;- code : int&#xa;- resultMsg : String&#xa;----------------&#xa;OK&#xa;FORBIDDEN&#xa;NOT_FOUND&#xa;SERVER_ERROR&#xa;----------------&#xa;+ getCode() : int&#xa;+ getResultMsg() : String" vertex="1">
+          <mxGeometry height="220" width="260" x="360" y="320" as="geometry" />
         </mxCell>
-        <mxCell id="pkg-login" value="Package: Login" style="swimlane;html=1;startSize=28;rounded=0;shadow=0;strokeColor=#D79B00;fillColor=#FFF2CC;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="40" y="720" width="1160" height="330" as="geometry" />
+        <mxCell id="pkg-login" parent="1" style="swimlane;html=1;startSize=28;rounded=0;shadow=0;strokeColor=#D79B00;fillColor=#FFF2CC;fontStyle=1;" value="Package: Login" vertex="1">
+          <mxGeometry height="330" width="1340" x="40" y="700" as="geometry" />
         </mxCell>
-        <mxCell id="loginview" value="LoginView&#xa;----------------&#xa;- id : String&#xa;- password : String&#xa;- authService : AuthService&#xa;----------------&#xa;+ LoginView()&#xa;+ inputId() : String&#xa;+ inputPassword() : String&#xa;+ login() : User&#xa;+ showMessage(msg : String) : void" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=8;spacingTop=6;fontStyle=1;strokeColor=#000000;fillColor=#FFFFFF;" vertex="1" parent="pkg-login">
-          <mxGeometry x="20" y="50" width="300" height="190" as="geometry" />
+        <mxCell id="loginview" parent="pkg-login" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=8;spacingTop=6;fontStyle=1;strokeColor=#000000;fillColor=#FFFFFF;" value="LoginView&#xa;----------------&#xa;- id : String&#xa;- password : String&#xa;- authService : AuthService&#xa;----------------&#xa;+ LoginView()&#xa;+ inputId() : String&#xa;+ inputPassword() : String&#xa;+ login() : User&#xa;+ showMessage(msg : String) : void" vertex="1">
+          <mxGeometry height="190" width="300" x="20" y="50" as="geometry" />
         </mxCell>
-        <mxCell id="authservice" value="AuthService&#xa;----------------&#xa;- userMap : Map&lt;String, User&gt;&#xa;----------------&#xa;+ AuthService()&#xa;+ login(id : String, password : String) : User&#xa;+ getUserMap() : Map&lt;String, User&gt;&#xa;+ setUserMap(userMap : Map&lt;String, User&gt;) : void" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=8;spacingTop=6;fontStyle=1;strokeColor=#000000;fillColor=#FFFFFF;" vertex="1" parent="pkg-login">
-          <mxGeometry x="360" y="50" width="340" height="180" as="geometry" />
+        <mxCell id="authservice" parent="pkg-login" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=8;spacingTop=6;fontStyle=1;strokeColor=#000000;fillColor=#FFFFFF;" value="AuthService&#xa;----------------&#xa;- userMap : Map&lt;String, User&gt;&#xa;----------------&#xa;+ AuthService()&#xa;+ login(id : String, password : String) : User&#xa;+ getUserMap() : Map&lt;String, User&gt;&#xa;+ setUserMap(userMap : Map&lt;String, User&gt;) : void" vertex="1">
+          <mxGeometry height="180" width="340" x="360" y="50" as="geometry" />
         </mxCell>
-        <mxCell id="user" value="User&#xa;----------------&#xa;- id : String&#xa;- password : String&#xa;- role : Role&#xa;----------------&#xa;+ User(id : String, password : String, role : Role)&#xa;+ canCreateReport() : boolean&#xa;+ getters / setters" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=8;spacingTop=6;fontStyle=1;strokeColor=#000000;fillColor=#FFFFFF;" vertex="1" parent="pkg-login">
-          <mxGeometry x="740" y="50" width="250" height="150" as="geometry" />
+        <mxCell id="user" parent="pkg-login" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=8;spacingTop=6;fontStyle=1;strokeColor=#000000;fillColor=#FFFFFF;" value="User&#xa;----------------&#xa;- id : String&#xa;- password : String&#xa;- role : Role&#xa;----------------&#xa;+ User(id : String, password : String, role : Role)&#xa;+ canCreateReport() : boolean&#xa;+ getters / setters" vertex="1">
+          <mxGeometry height="150" width="300" x="740" y="50" as="geometry" />
         </mxCell>
-        <mxCell id="role" value="&lt;&lt;enumeration&gt;&gt;&#xa;Role&#xa;----------------&#xa;ADMIN&#xa;ADMINISTRATOR&#xa;ROOT" style="rounded=0;whiteSpace=wrap;html=1;align=center;spacingTop=6;fontStyle=1;strokeColor=#000000;fillColor=#FFF2CC;" vertex="1" parent="pkg-login">
-          <mxGeometry x="1020" y="60" width="100" height="120" as="geometry" />
+        <mxCell id="role" parent="pkg-login" style="rounded=0;whiteSpace=wrap;html=1;align=center;spacingTop=6;fontStyle=1;strokeColor=#000000;fillColor=#FFF2CC;" value="&lt;&lt;enumeration&gt;&gt;&#xa;Role&#xa;----------------&#xa;ADMIN&#xa;ADMINISTRATOR&#xa;ROOT" vertex="1">
+          <mxGeometry height="120" width="120" x="1110" y="50" as="geometry" />
         </mxCell>
-        <mxCell id="edge-mainapp-run" value="starts" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="mainapp" target="run">
+        <mxCell id="edge-mainapp-run" edge="1" parent="1" source="mainapp" style="endArrow=block;html=1;rounded=0;" target="run" value="starts">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-run-loginview" value="authenticates via" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="run" target="loginview">
+        <mxCell id="edge-run-loginview" edge="1" parent="1" source="run" style="endArrow=block;html=1;rounded=0;" target="loginview" value="authenticates via">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-run-logmenuview" value="opens" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="run" target="logmenuview">
+        <mxCell id="edge-run-logmenuview" edge="1" parent="1" source="run" style="endArrow=block;html=1;rounded=0;" target="logmenuview" value="opens">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-logmenuview-analysisservice" value="uses selected file" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="logmenuview" target="analysisservice">
+        <mxCell id="edge-logmenuview-analysisservice" edge="1" parent="1" source="logmenuview" style="endArrow=block;html=1;rounded=0;" target="analysisservice" value="uses selected file">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-logmenuview-reportservice" value="uses" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="logmenuview" target="reportservice">
+        <mxCell id="edge-logmenuview-reportservice" edge="1" parent="1" source="logmenuview" style="endArrow=block;html=1;rounded=0;" target="reportservice" value="uses">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-logmenuview-user" value="holds" style="endArrow=block;html=1;rounded=0;dashed=1;" edge="1" parent="1" source="logmenuview" target="user">
+        <mxCell id="edge-logmenuview-user" edge="1" parent="1" source="logmenuview" style="endArrow=block;html=1;rounded=0;dashed=1;" target="user" value="holds">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-analysisservice-analysisresult" value="owns" style="startArrow=diamondThin;startFill=1;endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="analysisservice" target="analysisresult">
+        <mxCell id="edge-analysisservice-analysisresult" edge="1" parent="1" source="analysisservice" style="startArrow=diamondThin;startFill=1;endArrow=none;html=1;rounded=0;" target="analysisresult" value="owns">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-analysisservice-rangeresult" value="creates" style="endArrow=open;html=1;rounded=0;dashed=1;" edge="1" parent="1" source="analysisservice" target="rangeresult">
+        <mxCell id="edge-analysisservice-rangeresult" edge="1" parent="1" source="analysisservice" style="endArrow=open;html=1;rounded=0;dashed=1;" target="rangeresult" value="creates">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-analysisservice-logparse" value="parses via" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="analysisservice" target="logparse">
+        <mxCell id="edge-analysisservice-logparse" edge="1" parent="1" source="analysisservice" style="endArrow=block;html=1;rounded=0;" target="logparse" value="parses via">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-analysisservice-logdto" value="analyzes" style="endArrow=block;html=1;rounded=0;dashed=1;" edge="1" parent="1" source="analysisservice" target="logdto">
+        <mxCell id="edge-analysisservice-logdto" edge="1" parent="1" source="analysisservice" style="endArrow=block;html=1;rounded=0;dashed=1;" target="logdto" value="analyzes">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-analysisservice-statuscode" value="checks" style="endArrow=block;html=1;rounded=0;dashed=1;" edge="1" parent="1" source="analysisservice" target="statuscode">
+        <mxCell id="edge-analysisservice-statuscode" edge="1" parent="1" source="analysisservice" style="endArrow=block;html=1;rounded=0;dashed=1;" target="statuscode" value="checks">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-reportservice-analysisresult" value="formats" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="reportservice" target="analysisresult">
+        <mxCell id="edge-reportservice-analysisresult" edge="1" parent="1" source="reportservice" style="endArrow=block;html=1;rounded=0;" target="analysisresult" value="formats">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-reportservice-rangeresult" value="formats" style="endArrow=block;html=1;rounded=0;dashed=1;" edge="1" parent="1" source="reportservice" target="rangeresult">
+        <mxCell id="edge-reportservice-rangeresult" edge="1" parent="1" source="reportservice" style="endArrow=block;html=1;rounded=0;dashed=1;" target="rangeresult" value="formats">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-logparse-logdto" value="produces 0..*" style="startArrow=diamondThin;startFill=0;endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="logparse" target="logdto">
+        <mxCell id="edge-logparse-logdto" edge="1" parent="1" source="logparse" style="startArrow=diamondThin;startFill=0;endArrow=none;html=1;rounded=0;" target="logdto" value="produces 0..*">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-logdto-statuscode" value="has" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="logdto" target="statuscode">
+        <mxCell id="edge-logdto-statuscode" edge="1" parent="1" source="logdto" style="endArrow=block;html=1;rounded=0;" target="statuscode" value="has">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-loginview-authservice" value="uses" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="loginview" target="authservice">
+        <mxCell id="edge-loginview-authservice" edge="1" parent="1" source="loginview" style="endArrow=block;html=1;rounded=0;" target="authservice" value="uses">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-loginview-user" value="returns" style="endArrow=block;html=1;rounded=0;dashed=1;" edge="1" parent="1" source="loginview" target="user">
+        <mxCell id="edge-loginview-user" edge="1" parent="1" source="loginview" style="endArrow=block;html=1;rounded=0;dashed=1;" target="user" value="returns">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-authservice-user" value="manages 0..*" style="startArrow=diamondThin;startFill=0;endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="authservice" target="user">
+        <mxCell id="edge-authservice-user" edge="1" parent="1" source="authservice" style="startArrow=diamondThin;startFill=0;endArrow=none;html=1;rounded=0;" target="user" value="manages 0..*">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-user-role" value="has" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="user" target="role">
+        <mxCell id="edge-user-role" edge="1" parent="1" source="user" style="endArrow=block;html=1;rounded=0;" target="role" value="has">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
